@@ -1,4 +1,4 @@
-var rules={}
+var rules={} //git test
 var pos=[1,1]
 var grid=[]
 var auto=document.getElementById("auto")
