@@ -1,0 +1,2 @@
+# ruleset
+a little game
