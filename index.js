@@ -29,6 +29,11 @@ for (var i=0;i<grid.length;i++){
 		grid[grid.length-1][j]=1
 	}
 }
+grid[4][3]=1
+grid[4][4]=1
+grid[4][6]=1
+grid[4][7]=1
+
 function attemptAutoMove(){
 	if (isRule()){
 		attemptMove()
