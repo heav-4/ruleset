@@ -208,6 +208,9 @@ function handleKey(e){
 		case 40:
 			attemptMove(1)
 		break;
+		case 82:
+			parseLevel(levels[level])
+		break;
 	}
 }
 document.onkeydown=handleKey
