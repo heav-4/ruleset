@@ -3,6 +3,12 @@ var pos=[1,1]
 var grid=[]
 var auto=document.getElementById("auto")
 var see=document.getElementById("see")
+var level=0;
+var levels=[
+	"1;1;10;10>bbbbbbbbbb.baaaaaaaab.babbbbbbab.baaaaaabab.bbbbbbabab.bbbaaaabab.bbaaaaabab.baaacbbbab.baaaaaaaab.bbbbbbbbbb.",
+	"1;1;10;10>bbbbbbbbbb.baaaaaaaab.bbbbbbbbab.baaaaaaaab.bbbbbabbab.baaaacaaab.bbbbbbbbab.baaaaaaaab.bbbbbbbbab.bbbbbbbbbb.",
+	"4;4;10;10>bbbbbbbbbb.baaaaaaaab.baaaaaaaab.baabbbaaab.baababaaab.baabbbaaab.baaaaaaaab.baaaaaaaab.bccccccccb.bccccccccb."
+]
 see.onclick=function(e){
 	displayGrid()
 }
@@ -29,11 +35,27 @@ for (var i=0;i<grid.length;i++){
 		grid[grid.length-1][j]=1
 	}
 }
-grid[4][3]=1
-grid[4][4]=1
-grid[4][6]=1
-grid[4][7]=1
-
+function parseLevel(s){
+	var tmp=s.split(";")
+	pos=[parseInt(tmp[0]),parseInt(tmp[1])]
+	var w=parseInt(tmp[2])
+	var h=parseInt(tmp[3].split(">")[0])
+	tmp=s.split(">")[1].split("!").join("").split(".")
+	rules={}
+	grid=[]
+	for (var i=0;i<tmp.length;i++){
+		grid[i]=[]
+		for (var j=0;j<tmp[i].length;j++){
+			switch (tmp[i][j]){
+				case "a": grid[i][j]=0;break;
+				case "b": grid[i][j]=1;break;
+				case "c": grid[i][j]=2;break;
+			}
+		}
+	}
+	displayGrid()
+}
+parseLevel(levels[level])
 function attemptAutoMove(){
 	if (isRule()){
 		attemptMove()
@@ -76,7 +98,12 @@ function a(){
 	}
 }
 function moveallowed(id){
-	if (grid[pmoved(id)[0]][pmoved(id)[1]]!=0){
+	if (grid[pmoved(id)[0]][pmoved(id)[1]]==1){
+		return false
+	}
+	if (grid[pmoved(id)[0]][pmoved(id)[1]]==2){
+		level++
+		parseLevel(levels[level])
 		return false
 	}
 	return true
@@ -139,7 +166,7 @@ function displayGrid(){
 	}
 }
 function gridsym(s){
-	return s.split("1").join("#").split("0").join(".")
+	return s.split("1").join("#").split("0").join(".").split("2").join("F")
 }
 function currentsym(){
 	if (isRule()){
